@@ -93,7 +93,7 @@ pre {
             this.$emit('title','冒泡广场');
         },
         methods: {
-            get: function () {
+            get() {
                 axios.get(bird + "https://coding.net/api/tweet/public_tweets?filter=true&size=10&sort=time").then(function (res) {
                     console.log(res.data.data)
                     this.list = res.data.data;

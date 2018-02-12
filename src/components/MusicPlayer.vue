@@ -89,7 +89,7 @@
 
         },
         methods: {
-            audioEvent: function () {
+            audioEvent () {
                 var audio = document.querySelector('#audio');
                 var _this = this;
 
@@ -112,14 +112,14 @@
                     _this.isPlaying = false;
                 });
             },
-            loading: function () {
+            loading () {
                 Indicator.open({
                     text: '正在缓冲...',
                     spinnerType: 'fading-circle'
                 });
             },
             //播放
-            togglePlay: function () {
+            togglePlay () {
                 var audio = document.querySelector('#audio');
                 if (this.isPlaying == false) {
                     audio.play();
@@ -130,15 +130,15 @@
                 }
             },
             //上一首
-            prev: function () {
+            prev () {
 
             },
             //下一首
-            next: function () {
+            next () {
 
             },
 
-            get: function () {
+            get () {
                 var id = this.$route.query.id;
                 var _this = this;
                 this.loading();
@@ -165,7 +165,7 @@
                 })
             },
             //请求歌词接口
-            ajaxLyric: function () {
+            ajaxLyric () {
                  var id = this.$route.query.id;
                  var url="http://www.kugou.com/yy/index.php?r=play/getdata&hash="+id;
                 axios.get(bird+url)
@@ -181,7 +181,7 @@
                 
             },
             //接收歌词转化格式
-            parseLyric: function (text) {
+            parseLyric (text) {
                 var lines = text.split('\n'),
                     //用于匹配时间的正则表达式，匹配的结果类似[xx:xx.xx]
                     pattern = /\[\d{0,4}:\d{0,4}.\d{0,4}\]/g,
@@ -213,7 +213,7 @@
 
                 return result;
             },
-            scrollLyrics: function () {
+            scrollLyrics () {
                 var audio = document.querySelector('#audio');
                 var uls = document.getElementById("lyriclist");
                 var lis = uls.getElementsByTagName("li");

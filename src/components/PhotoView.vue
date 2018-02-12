@@ -23,7 +23,7 @@
             this.getData();
         },
         methods:{
-            getData:function () {
+            getData () {
                 this.view=JSON.parse(sessionStorage.getItem('photoview'));
             }
         },

@@ -58,10 +58,10 @@
         },
         methods: {
             //改为vuex获取数据
-            getBanners:function () {
+            getBanners () {
                 this.$store.dispatch('FECTH_INDEX_BANNER');
             },
-            getNews:function () {
+            getNews () {
                 this.$store.dispatch('FECTH_INDEX_NEWS');
 
             }

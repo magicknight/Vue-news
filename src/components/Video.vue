@@ -54,7 +54,7 @@ export default {
     activated() {
     },
     methods: {
-        videotype: function () {
+        videotype () {
             axios.get(apiurl.videoType()).then(function (res) {
                 console.log(res.data);
                 this.typelist = res.data;
@@ -64,7 +64,7 @@ export default {
                 console.log(error)
             })
         },
-        getTypeData: function () {
+        getTypeData () {
             axios.get(apiurl.videoTypeData(this.type, 0, 10)).then(function (res) {
                 console.log(res.data[this.type]);
                 // Indicator.close();
@@ -72,7 +72,7 @@ export default {
                 console.log(error)
             });
         },
-        get: function () {
+        get () {
             var data = {
                 type: 0,
                 page: 0
@@ -86,7 +86,7 @@ export default {
                     console.log(error)
                 })
         },
-        pushUrl: function (index) {
+        pushUrl (index) {
             sessionStorage.setItem("videodetail", JSON.stringify(this.list[index]));
             this.$router.push({ path: '/player' });
         }

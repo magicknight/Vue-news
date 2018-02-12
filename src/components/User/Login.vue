@@ -36,7 +36,7 @@
             })
         },
         methods: {
-            Login: function () {
+            Login () {
                 console.log(JSON.stringify(this.token))
                 if (this.token || localStorage.getItem("token")) {
                     alert("已经登录了");
@@ -46,7 +46,7 @@
                     //console.log(JSON.stringify(this.LoginInfo));
                 }
             },
-            isLogin:function () {
+            isLogin () {
                 if (this.token || localStorage.getItem("token")) {
 
                 }

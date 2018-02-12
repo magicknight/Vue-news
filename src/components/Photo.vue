@@ -3,8 +3,8 @@
         <div class="container">
             <div class="waterfall">
 
-                <div class="waterlist list animated fadeInUp " v-for="(item ,index) in  list" @click="showImg('https://images.weserv.nl/?url='+item.img)+'&w=400'">
-                    <img  v-lazy.container='"https://images.weserv.nl/?url="+item.img+"&w=400"'>
+                <div class="waterlist list animated fadeInUp " v-for="(item ,index) in  list" @click="showImg('https://wxapp.it919.cn/?service=Common.img&imgurl='+item.img)+'&w=400'">
+                    <img  v-lazy.container='"https://wxapp.it919.cn/?service=Common.img&imgurl="+item.img+"&w=400"'>
                 </div>
 
             </div>

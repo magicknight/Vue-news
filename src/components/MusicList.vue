@@ -25,16 +25,16 @@ export default {
     this.$emit('title', '音乐特色榜');
   },
   methods: {
-    loading: function () {
+    loading () {
       Indicator.open({
         text: '加载中...',
         spinnerType: 'fading-circle'
       });
     },
-    pushUrl: function (id) {
+    pushUrl (id) {
       this.$router.push({ path: '/music', query: { id: id } });
     },
-    get: function () {
+    get () {
       this.loading();
       var url = "http://m.kugou.com/rank/list?json=true";
       axios.get(bird+url).then(function (res) {
