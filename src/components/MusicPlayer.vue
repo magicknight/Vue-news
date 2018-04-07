@@ -1,11 +1,9 @@
 <template>
     <div id="m-box">
         <div id="m-bg" :style="{backgroundImage: 'url(' + music.pic + ')'}">
-          <!--  {{lyric.lyric}}-->
-           <!-- {{newLyric}}-->
         </div>
-        <div class="m-circle">
-            <img class="rat-img roation" :src="music.pic"/>
+        <div class="m-circle circle" >
+            <img class="rat-img " id="circle" :src="music.pic"/>
         </div>
 
         <div id="lyric">
@@ -40,15 +38,17 @@
 </template>
 
 <script>
-    import axios from  'axios'
-    import {Indicator} from 'mint-ui'
-    export default{
-        data(){
+    import axios from 'axios'
+    import {
+        Indicator
+    } from 'mint-ui'
+    export default {
+        data() {
             return {
                 isPlaying: false,
                 currentIndex: 0, // 当前播放的歌曲位置
                 currentTime: 0, //当前时间
-                durationTime: 0,//总时间
+                durationTime: 0, //总时间
                 playTime: 0,
                 newLyric: {}, //加工后的歌词
                 lyric: {
@@ -64,37 +64,37 @@
                 }
             }
         },
-        beforeCreate(){
-           // console.info("-----------生命周期:beforeCreate----------------");
+        beforeCreate() {
+            // console.info("-----------生命周期:beforeCreate----------------");
         },
-        created(){
-           // console.info("-----------生命周期:cereted 实例已创建----------------");
+        created() {
+            // console.info("-----------生命周期:cereted 实例已创建----------------");
             //this.ajaxLyric();//获取歌词
 
         },
-        mounted(){
+        mounted() {
             this.get();
             this.$emit("music", this.music);
-           // console.info("---------------生命周期:mounted--------------------");
+            // console.info("---------------生命周期:mounted--------------------");
             this.audioEvent();
-            this.ajaxLyric();//获取歌词
+            this.ajaxLyric(); //获取歌词
 
         },
         //keep-alive之后
-        activated(){
-            this.ajaxLyric();//重新获取一次歌词
+        activated() {
+            this.ajaxLyric(); //重新获取一次歌词
             this.currentTime = 0;
             this.get();
-           // console.info("------------生命周期: activated----------");
+            // console.info("------------生命周期: activated----------");
 
         },
         methods: {
-            audioEvent: function () {
+            audioEvent: function() {
                 var audio = document.querySelector('#audio');
                 var _this = this;
 
                 //判断是否加载完 (有个问题:ios浏览器下面audio不会自动播放)
-                audio.addEventListener("loadedmetadata", function () {
+                audio.addEventListener("loadedmetadata", function() {
                     audio.play();
                     _this.isPlaying = true;
                     Indicator.close();
@@ -102,24 +102,24 @@
                 });
 
                 //获取播放时间
-                audio.addEventListener("timeupdate", function () {
+                audio.addEventListener("timeupdate", function() {
                     _this.currentTime = this.currentTime;
                 });
 
                 //判断结束
-                audio.addEventListener("ended", function () {
+                audio.addEventListener("ended", function() {
                     console.log("播放完");
                     _this.isPlaying = false;
                 });
             },
-            loading: function () {
+            loading: function() {
                 Indicator.open({
                     text: '正在缓冲...',
                     spinnerType: 'fading-circle'
                 });
             },
             //播放
-            togglePlay: function () {
+            togglePlay: function() {
                 var audio = document.querySelector('#audio');
                 if (this.isPlaying == false) {
                     audio.play();
@@ -130,58 +130,59 @@
                 }
             },
             //上一首
-            prev: function () {
+            prev: function() {
 
             },
             //下一首
-            next: function () {
+            next: function() {
 
             },
 
-            get: function () {
+            get: function() {
                 var id = this.$route.query.id;
                 var _this = this;
                 this.loading();
-                var url="http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash="+id+"&from=mkugou"
-                axios.get(bird+url).then(function (res) {
-                   // console.log(res.data.data);
-                   // _this.list = res.data;
-                 
-                   
-                    this.list=res.data
+                var url = "http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash=" + id + "&from=mkugou"
+                axios.get(bird + url).then(function(res) {
+                    // console.log(res.data.data);
+                    // _this.list = res.data;
+
+
+                    this.list = res.data
                     _this.playTime = this.list.timeLength;
 
                     _this.music = {
-                       title: _this.list.songName,
+                        title: _this.list.songName,
                         author: _this.list.fileName,
                         url: _this.list.url,
-                        pic:(_this.list.imgUrl).replace('{size}',400),
+                        pic: (_this.list.imgUrl).replace('{size}', 400),
                     };
                     Indicator.close();
 
-                   this.$emit('title', this.music.title);
-                }.bind(this)).catch(function (error) {
+                    this.$emit('title', this.music.title);
+                }.bind(this)).catch(function(error) {
                     console.log(error)
                 })
             },
             //请求歌词接口
-            ajaxLyric: function () {
-                 var id = this.$route.query.id;
-                 var url="http://www.kugou.com/yy/index.php?r=play/getdata&hash="+id;
-                axios.get(bird+url)
-                    .then(function (res) {
+            ajaxLyric: function() {
+                this.newLyric = {}
+                var id = this.$route.query.id;
+                var url = "http://www.kugou.com/yy/index.php?r=play/getdata&hash=" + id;
+                axios.get(bird + url)
+                    .then(function(res) {
                         this.lyric.lyric = JSON.stringify(res.data.data.lyrics);
                         this.newLyric = this.parseLyric(res.data.data.lyrics);
                         this.scrollLyrics(); //歌词滚动
 
                     }.bind(this))
-                    .catch(function (error) {
+                    .catch(function(error) {
                         console.log(error);
                     })
-                
+
             },
             //接收歌词转化格式
-            parseLyric: function (text) {
+            parseLyric: function(text) {
                 var lines = text.split('\n'),
                     //用于匹配时间的正则表达式，匹配的结果类似[xx:xx.xx]
                     pattern = /\[\d{0,4}:\d{0,4}.\d{0,4}\]/g,
@@ -189,17 +190,17 @@
                     result = [];
                 //去掉不含时间的行
                 while (!pattern.test(lines[0])) {
-                   lines = lines.slice(1);
+                    lines = lines.slice(1);
                 }
                 //上面用'\n'生成生成数组时，结果中最后一个为空元素，这里将去掉
                 lines[lines.length - 1].length === 0 && lines.pop();
-                lines.forEach(function (v, i, a) {
+                lines.forEach(function(v, i, a) {
                     //提取出时间[xx:xx.xx]
                     var time = v.match(pattern),
                         //提取歌词
                         value = v.replace(pattern, '');
                     //因为一行里面可能有多个时间，所以time有可能是[xx:xx.xx][xx:xx.xx][xx:xx.xx]的形式，需要进一步分隔
-                    time.forEach(function (v1, i1, a1) {
+                    time.forEach(function(v1, i1, a1) {
                         //去掉时间里的中括号得到xx:xx.xx
                         var t = v1.slice(1, -1).split(':');
                         //将结果压入最终数组
@@ -207,21 +208,21 @@
                     });
                 });
                 //最后将结果数组中的元素按时间大小排序，以便保存之后正常显示歌词
-                result.sort(function (a, b) {
+                result.sort(function(a, b) {
                     return a[0] - b[0];
                 });
 
                 return result;
             },
-            scrollLyrics: function () {
+            scrollLyrics: function() {
                 var audio = document.querySelector('#audio');
                 var uls = document.getElementById("lyriclist");
                 var lis = uls.getElementsByTagName("li");
 
                 var _this = this;
 
-                audio.addEventListener("timeupdate", function () {
-                    for (var i = 0, l = _this.newLyric.length; i < l; i++) {
+                audio.addEventListener("timeupdate", function() {
+                    for (var i = 0; i < _this.newLyric.length; i++) {
                         if (this.currentTime > _this.newLyric[i][0]) {
                             _this.top = -i * 25;
                             lis[i].className = "current";
@@ -243,7 +244,7 @@
         min-height: 100%;
         _height: 100%;
     }
-
+    
     #m-bg {
         width: 100%;
         background-repeat: no-repeat;
@@ -269,29 +270,26 @@
         -ms-transform-origin: center top;
         transform-origin: center top;
         clear: both;
-
+        background-size: cover;
     }
-
-    @-webkit-keyframes rotation {
-        from {
-            -webkit-transform: rotate(0deg);
-            transform: rotate(0deg)
+    
+    .circle,
+    #circle {
+        -webkit-animation: run 5s linear 0s infinite;
+        animation: run 5s linear 0s infinite;
+    }
+    
+    @-webkit-keyframes run {
+        0% {
+            -webkit-transform: rotate(0);
+            transform: rotate(0)
         }
         to {
-            -webkit-transform: rotate(360deg);
-            transform: rotate(360deg)
+            -webkit-transform: rotate(1turn);
+            transform: rotate(1turn)
         }
     }
-
-    .roation {
-        -webkit-transform: rotate(360deg);
-        animation: rotation 10s linear infinite;
-        -moz-animation: rotation 10s linear infinite;
-        -webkit-animation: rotation 10s linear infinite;
-        -o-animation: rotation 10s linear infinite;
-
-    }
-
+    
     .m-circle {
         opacity: 1;
         z-index: 999;
@@ -300,19 +298,20 @@
         border-radius: 50%;
         margin: 0 auto;
         margin-top: 30%;
-        padding-bottom:20px;
+        padding-bottom: 20px;
+        position: relative;
     }
-
+    
     .m-circle img {
         width: 100%;
         height: 100%;
         margin: 0 auto;
         border-radius: 50%;
-        border:20px solid #333;
+        border: 20px solid #333;
         box-sizing: border-box;
     }
-
     /*audio player*/
+    
     #audio-play {
         position: fixed;
         width: 100%;
@@ -325,24 +324,24 @@
         box-shadow: 3px 3px 8px #ddd;
         background: rgba(152, 152, 150, 0.7);
     }
-
+    
     .progressbar {
         margin-top: 10px;
         width: 100%;
         height: 3px;
         background: #666;
     }
-
+    
     #current_line {
         height: 3px;
         background: #cb5d5d
     }
-
+    
     #audio-play p i {
         color: #333;
         font-size: 12px;
     }
-
+    
     .song-title {
         text-align: center;
         font-size: 16px;
@@ -350,7 +349,7 @@
         padding: 20px 10px;
         color: #262424;
     }
-
+    
     .song-btn button {
         width: 33.3%;
         display: inline-block;
@@ -363,6 +362,4 @@
         font-size: 30px;
         color: #262424;
     }
-
-
 </style>

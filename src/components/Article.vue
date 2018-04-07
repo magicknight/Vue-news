@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="content" v-if="article">
         <h3>{{article.title}}</h3>
         <p class="ptime">{{article.ptime}} {{article.source}}</p>
         <p v-for="imgs in article.img ">
@@ -14,18 +14,20 @@
 </style>
 <script>
     import api from '../api/api'
-    import {Indicator} from 'mint-ui'
-    export default{
-        data(){
+    import {
+        Indicator
+    } from 'mint-ui'
+    export default {
+        data() {
             return {
                 msg: 'hello vue',
                 article: {}
             }
         },
-        created(){
+        created() {
             //this.getArticle();
         },
-        activated(){
+        activated() {
             this.$emit('title', '文章详情');
             this.article = {};
             this.getArticle();
@@ -38,18 +40,20 @@
             window.scrollTo(0, 0)
         },
         methods: {
-            getArticle: function () {
-                var data={
-                    postid:String(this.$route.query.id)
+            getArticle: function() {
+                var data = {
+                    postid: String(this.$route.query.id)
                 };
                 api.article(data)
-                .then(function (res) {
-                    Indicator.close();
-                    (typeof res.data == "object") ? this.article = res.data : this.article = {"body": "该内容已删除"};
+                    .then(function(res) {
+                        Indicator.close();
+                        (typeof res.data == "object") ? this.article = res.data: this.article = {
+                            "body": "该内容已删除"
+                        };
 
-                }.bind(this)).catch(function (error) {
-                    console.log(error)
-                })
+                    }.bind(this)).catch(function(error) {
+                        console.log(error)
+                    })
 
             }
         },
@@ -61,12 +65,12 @@
     .content {
         padding: 5%;
     }
-
+    
     .ptime {
         color: #888;
         line-height: 30px;
     }
-
+    
     .textcontent {
         line-height: 28px;
     }
