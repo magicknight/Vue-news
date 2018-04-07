@@ -22,7 +22,7 @@ export default {
     this.$emit('title', '知乎日报');
   },
   methods: {
-    get: function () {
+    get () {
       console.log("get");
       api.zhihu_daily()
         .then(function (response) {
@@ -33,7 +33,7 @@ export default {
           console.log(error);
         });
     },
-    pushUrl: function (id) {
+    pushUrl (id) {
       this.$router.push({ path: '/zhihuarticle', query: { id: id } })
     }
   }

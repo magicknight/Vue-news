@@ -45,7 +45,7 @@
             this.$emit('title', '微信精选');
         },
         methods: {
-            get: function () {
+            get  () {
                 var data={
                     ps:this.ps
                 }

@@ -46,7 +46,7 @@
 
         methods: {
             //请求歌词接口
-            ajaxLyric: function () {
+            ajaxLyric () {
                 axios.get(apiurl.getLyric(418603077))
                     .then(function (res) {
                         this.lyric.lyric = (res.data.lrc.lyric);
@@ -58,7 +58,7 @@
                     })
             },
             //接收歌词转化格式
-            parseLyric: function (text) {
+            parseLyric (text) {
                 //将文本分隔成一行一行，存入数组
                 var lines = text.split('\n'),
                     //用于匹配时间的正则表达式，匹配的结果类似[xx:xx.xx]
@@ -91,7 +91,7 @@
 
                 return result;
             },
-            scrollLyrics:function () {
+            scrollLyrics () {
                 var audio = document.querySelector('#audio');
                 var uls=document.getElementById("lyriclist");
                 var lis=uls.getElementsByTagName("li");

@@ -99,13 +99,13 @@
         this.get();
       },
         methods: {
-            loading: function () {
+            loading () {
                 Indicator.open({
                     text: '加载中...',
                     spinnerType: 'fading-circle'
                 })
             },
-            get: function () {
+            get () {
                 this.loading();
                 var data={
                     start:this.start,
@@ -124,7 +124,7 @@
                         console.log(error);
                     })
             },
-            loadMore: function () {
+            loadMore () {
                 this.start = this.start + this.count + 1;
                 this.get();
             }

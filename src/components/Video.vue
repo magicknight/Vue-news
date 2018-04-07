@@ -37,9 +37,9 @@
             return {
                 list: {},
                 typelist: {},
-                start: 10,
+                start: 0,
                 count: 10,
-                type: "1"
+                type: "T1457068979049"
             }
         },
         created() {
@@ -50,13 +50,33 @@
             });
 
             this.get();
+            //this.videotype();
+            //this.getTypeData();
         },
         activated() {},
         methods: {
+            videotype: function() {
+                axios.get(apiurl.videoType()).then(function(res) {
+                    console.log(res.data);
+                    this.typelist = res.data;
+                    // Indicator.close();
+
+                }.bind(this)).catch(function(error) {
+                    console.log(error)
+                })
+            },
+            getTypeData: function() {
+                axios.get(apiurl.videoTypeData(this.type, 0, 10)).then(function(res) {
+                    console.log(res.data[this.type]);
+                    // Indicator.close();
+                }.bind(this)).catch(function(error) {
+                    console.log(error)
+                });
+            },
             get: function() {
-                let data = {
-                    type: 2,
-                    page: 20
+                var data = {
+                    type: 0,
+                    page: 0
                 }
                 api.video_type(data)
                     .then(function(res) {

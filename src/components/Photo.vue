@@ -2,9 +2,11 @@
     <div>
         <div class="container">
             <div class="waterfall">
+
                 <div class="waterlist list animated fadeInUp " v-for="(item ,index) in  list" @click="showImg(item.img)">
                     <img  v-lazy.container='item.img'>
                 </div>
+
             </div>
         </div>
         <span @click="loadMore" id="load" v-show="list.length!=0">加载更多</span>

@@ -143,10 +143,10 @@
             "$route": "fatched"
         },
         methods: {
-            show: function () {
+            show () {
                 this.popupVisible = true
             },
-            fatched: function () {
+            fatched () {
                 this.popupVisible = false;
             },
             tip: function () {

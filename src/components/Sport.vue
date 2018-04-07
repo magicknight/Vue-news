@@ -26,10 +26,10 @@
         },
         methods:{
             //改为vuex获取数据
-            getList:function () {
+            getList () {
                 this.$store.dispatch('FECTH_SPORT_LIST');
             },
-            pushUrl:function (id) {
+            pushUrl (id) {
              
                 if(!id){
                      alert("该文章已被删除");

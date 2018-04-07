@@ -77,13 +77,13 @@
       this.$emit('title', this.list.title);
     },
     methods: {
-      loading: function () {
+      loading () {
         Indicator.open({
           text: '加载中...',
           spinnerType: 'fading-circle'
         })
       },
-      get: function () {
+      get () {
         this.loading();
         var data={
           id:this.$route.query.id

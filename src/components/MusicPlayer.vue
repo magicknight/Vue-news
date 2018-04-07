@@ -1,9 +1,11 @@
 <template>
     <div id="m-box">
         <div id="m-bg" :style="{backgroundImage: 'url(' + music.pic + ')'}">
+          <!--  {{lyric.lyric}}-->
+           <!-- {{newLyric}}-->
         </div>
-        <div class="m-circle circle" >
-            <img class="rat-img " id="circle" :src="music.pic"/>
+        <div class="m-circle">
+            <img class="rat-img roation" :src="music.pic"/>
         </div>
 
         <div id="lyric">
@@ -166,9 +168,9 @@
             },
             //请求歌词接口
             ajaxLyric: function() {
+                let id = this.$route.query.id;
                 this.newLyric = {}
-                var id = this.$route.query.id;
-                var url = "http://www.kugou.com/yy/index.php?r=play/getdata&hash=" + id;
+                let url = "http://www.kugou.com/yy/index.php?r=play/getdata&hash=" + id;
                 axios.get(bird + url)
                     .then(function(res) {
                         this.lyric.lyric = JSON.stringify(res.data.data.lyrics);
@@ -222,7 +224,7 @@
                 var _this = this;
 
                 audio.addEventListener("timeupdate", function() {
-                    for (var i = 0; i < _this.newLyric.length; i++) {
+                    for (var i = 0, l = _this.newLyric.length; i < l; i++) {
                         if (this.currentTime > _this.newLyric[i][0]) {
                             _this.top = -i * 25;
                             lis[i].className = "current";
@@ -273,21 +275,23 @@
         background-size: cover;
     }
     
-    .circle,
-    #circle {
-        -webkit-animation: run 5s linear 0s infinite;
-        animation: run 5s linear 0s infinite;
-    }
-    
-    @-webkit-keyframes run {
-        0% {
-            -webkit-transform: rotate(0);
-            transform: rotate(0)
+    @-webkit-keyframes rotation {
+        from {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg)
         }
         to {
-            -webkit-transform: rotate(1turn);
-            transform: rotate(1turn)
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg)
         }
+    }
+    
+    .roation {
+        -webkit-transform: rotate(360deg);
+        animation: rotation 10s linear infinite;
+        -moz-animation: rotation 10s linear infinite;
+        -webkit-animation: rotation 10s linear infinite;
+        -o-animation: rotation 10s linear infinite;
     }
     
     .m-circle {
@@ -299,7 +303,6 @@
         margin: 0 auto;
         margin-top: 30%;
         padding-bottom: 20px;
-        position: relative;
     }
     
     .m-circle img {

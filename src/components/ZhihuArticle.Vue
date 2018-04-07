@@ -29,7 +29,7 @@ export default {
     this.get()
   },
   methods: {
-    get: function () {
+    get () {
       var data = {
         id: this.$route.query.id
       }

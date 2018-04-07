@@ -40,7 +40,7 @@
             window.scrollTo(0, 0)
         },
         methods: {
-            getArticle: function() {
+            getArticle() {
                 var data = {
                     postid: String(this.$route.query.id)
                 };

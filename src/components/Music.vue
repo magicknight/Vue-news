@@ -88,18 +88,18 @@
 
       },
         methods: {
-            replaceImg:function (param) { 
+            replaceImg (param) { 
                 var img=param.replace('{size}',400);
                 return img
 
              },
-            loading:function () {
+            loading () {
               Indicator.open({
                 text: '加载中...',
                 spinnerType: 'fading-circle'
               });
             },
-            get: function () {
+            get () {
                 this.loading();
                 var id=this.$route.query.id;
                 var url="http://m.kugou.com/rank/info/?rankid="+id+"&page=1&json=true"

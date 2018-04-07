@@ -44,7 +44,7 @@
             this.get();
         },
         methods: {
-            get: function () {
+            get () {
                 var data={
                     page:this.size
                 }

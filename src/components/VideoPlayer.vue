@@ -50,7 +50,7 @@
       this.$emit('title','热播视频-详情');
     },
     methods:{
-        getData:function () {
+        getData () {
             this.video=JSON.parse(sessionStorage.getItem('videodetail'));
         }
     }
