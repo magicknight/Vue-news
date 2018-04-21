@@ -55,28 +55,10 @@
         },
         activated() {},
         methods: {
-            videotype: function() {
-                axios.get(apiurl.videoType()).then(function(res) {
-                    console.log(res.data);
-                    this.typelist = res.data;
-                    // Indicator.close();
-
-                }.bind(this)).catch(function(error) {
-                    console.log(error)
-                })
-            },
-            getTypeData: function() {
-                axios.get(apiurl.videoTypeData(this.type, 0, 10)).then(function(res) {
-                    console.log(res.data[this.type]);
-                    // Indicator.close();
-                }.bind(this)).catch(function(error) {
-                    console.log(error)
-                });
-            },
             get: function() {
                 var data = {
-                    type: 0,
-                    page: 0
+                    type: 2,
+                    page: 10
                 }
                 api.video_type(data)
                     .then(function(res) {
