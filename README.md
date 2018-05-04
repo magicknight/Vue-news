@@ -13,7 +13,7 @@
 浏览地址：
 [演示](http://code.it919.cn/dist)
 
-![二维码体验](https://dn-coding-net-production-pp.qbox.me/8175c051-daa0-4148-8842-c235c2a398de.png) 
+![二维码体验](https://dn-coding-net-production-pp.qbox.me/3e898389-8717-445b-9d8f-60655745de0d.png)
 
 
 ### Build Setup 安装部署运行
